@@ -36,7 +36,6 @@ async def main():
         # Obtener información del servidor
         info = await client.info()
         print(GREEN + f"Servidor: {info.name}")
-        print(YELLOW + f"Mapa: {info.map_name}")
         print(CYAN + f"Jugadores: {info.players}/{info.max_players}")
 
         # Obtener lista de jugadores
