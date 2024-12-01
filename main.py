@@ -1,6 +1,5 @@
 import os
-import requests
-from samp_query import Client
+from samp_query import SAMPServer
 
 # Colores
 GREEN = '\033[32m'
@@ -31,11 +30,11 @@ try:
     port = int(port)
 
     # Crear un cliente SAMP y realizar la consulta
-    client = Client(ip, port)
+    server = SAMPServer(ip, port)
 
     # Obtener información del servidor
-    info = client.get_server_info()
-    players = client.get_server_players()
+    info = server.info()
+    players = server.players()
 
     print(GREEN + f"Servidor: {info['hostname']}")
     print(YELLOW + f"Mapa: {info['mapname']}")
@@ -44,7 +43,7 @@ try:
 
     if players:
         for player in players:
-            print(f"{CYAN}- {player['nickname']} (Score: {player['score']})")
+            print(f"{CYAN}- {player['name']} (Score: {player['score']})")
     else:
         print(RED + "No hay jugadores conectados en este momento.")
 
