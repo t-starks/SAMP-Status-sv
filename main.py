@@ -17,12 +17,13 @@ print(RED + """
 |__   |     | | | |   __|  |__   |  _| .'|  _| | |_ -|  |_ -| | |
 |_____|__|__|_|_|_|__|     |_____|_| |__,|_| |___|___|  |___|\_/ 
                                                                  """)
-print(GREEN + "   » ᴛ. ꜱᴛᴀʀᴋ «")
+print(CYAN + "   » ᴛ. ꜱᴛᴀʀᴋ «")
 print("")
-print("╔ Ingresa la IP y Puerto de esta manera『 123.456.678:8080 』")
+print(GREEN + "╔ Ingresa la IP y Puerto de esta manera『 123.456.678:8080 』")
 
 # Entrada del usuario
 server_address = input("╚» ")
+print("")
 
 async def main():
     try:
