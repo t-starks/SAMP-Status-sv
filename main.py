@@ -1,5 +1,6 @@
 import os
-from samp_query import SAMPServer
+import trio
+from samp_query import Client
 
 # Colores
 GREEN = '\033[32m'
@@ -22,32 +23,42 @@ print("╔ Ingresa la IP y Puerto de esta manera『 123.456.678:8080 』")
 
 # Entrada del usuario
 server_address = input("╚» ")
-os.system("clear")
 
-try:
-    # Dividir la entrada en IP y Puerto
-    ip, port = server_address.split(':')
-    port = int(port)
+async def main():
+    try:
+        # Dividir la entrada en IP y Puerto
+        ip, port = server_address.split(':')
+        port = int(port)
 
-    # Crear un cliente SAMP y realizar la consulta
-    server = SAMPServer(ip, port)
+        # Crear un cliente SAMP
+        client = Client(ip=ip, port=port)
 
-    # Obtener información del servidor
-    info = server.info()
-    players = server.players()
+        # Obtener información del servidor
+        info = await client.info()
+        print(GREEN + f"Servidor: {info.name}")
+        print(YELLOW + f"Mapa: {info.map_name}")
+        print(CYAN + f"Jugadores: {info.players}/{info.max_players}")
 
-    print(GREEN + f"Servidor: {info['hostname']}")
-    print(YELLOW + f"Mapa: {info['mapname']}")
-    print(CYAN + f"Jugadores: {info['players']} / {info['maxplayers']}")
-    print(RESET + "\nLista de jugadores conectados:")
+        # Obtener lista de jugadores
+        player_list = await client.players()
+        print(RESET + "\nLista de jugadores conectados:")
 
-    if players:
-        for player in players:
-            print(f"{CYAN}- {player['name']} (Score: {player['score']})")
-    else:
-        print(RED + "No hay jugadores conectados en este momento.")
+        if player_list.players:
+            for player in player_list.players:
+                print(f"{CYAN}- {player.name} (Score: {player.score})")
+        else:
+            print(RED + "No hay jugadores conectados en este momento.")
 
-except ValueError:
-    print(RED + "Error: Ingresa la dirección en el formato correcto (IP:PUERTO).")
-except Exception as e:
-    print(RED + f"Error: {str(e)}")
+        # Obtener reglas del servidor
+        rule_list = await client.rules()
+        print(RESET + "\nReglas del servidor:")
+        for rule in rule_list.rules:
+            print(f"{YELLOW}- {rule.name}: {rule.value}")
+
+    except ValueError:
+        print(RED + "Error: Ingresa la dirección en el formato correcto (IP:PUERTO).")
+    except Exception as e:
+        print(RED + f"Error: {str(e)}")
+
+# Ejecutar el programa principal
+trio.run(main)
