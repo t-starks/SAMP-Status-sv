@@ -76,8 +76,7 @@ Reglas del servidor:
 Si tienes ideas para mejorar este script, por favor crea un _pull request_ o abre un _issue_ en este repositorio.
 
 ## Licencia
-
-Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto está cubierto por la **Licencia de Uso Restringido v1.0**. Consulte el archivo [LICENSE](LICENSE) para más información.
 
 ---
 
